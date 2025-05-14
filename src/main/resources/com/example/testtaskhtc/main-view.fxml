@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0"
+            prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.testtaskhtc.MainController">
+    <children>
+        <AnchorPane prefHeight="51.0" prefWidth="1000.0" style="-fx-background-color: #fff;">
+            <effect>
+                <DropShadow/>
+            </effect>
+            <children>
+                <Label fx:id="globalLabel" alignment="CENTER" layoutX="366.0" layoutY="22.0" prefHeight="32.0"
+                       prefWidth="421.0" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+                    <effect>
+                        <Blend/>
+                    </effect>
+                </Label>
+                <Button fx:id="addButton" defaultButton="true" layoutX="107.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#onAddButtonClick" prefHeight="32.0" prefWidth="72.0" text="Добавить"
+                        textAlignment="JUSTIFY" textOverrun="WORD_ELLIPSIS"/>
+                <Button fx:id="deleteBtn" defaultButton="true" layoutX="288.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#onDeleteButtonClick" prefHeight="32.0" prefWidth="72.0" text="Удалить"/>
+                <Button fx:id="saveBtn" defaultButton="true" layoutX="192.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#onSaveButtonClick" prefHeight="32.0" prefWidth="87.0" text="Сохранить"/>
+                <Button fx:id="searchBtn" defaultButton="true" layoutX="374.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#onSearchButtonClick" prefHeight="32.0" prefWidth="58.0" text="Поиск"/>
+            </children>
+        </AnchorPane>
+        <TableView fx:id="tableView" editable="true" layoutX="90.0" layoutY="59.0" prefHeight="472.0" prefWidth="905.0"
+                   tableMenuButtonVisible="true"/>
+        <Button fx:id="priceBtn" defaultButton="true" layoutX="18.0" layoutY="76.0" mnemonicParsing="false"
+                onAction="#onPriceButtonClick" prefHeight="25.0" prefWidth="58.0" text="Цена"/>
+        <Button fx:id="productBtn" defaultButton="true" layoutX="18.0" layoutY="119.0" mnemonicParsing="false"
+                onAction="#onProductButtonClick" prefHeight="25.0" prefWidth="58.0" text="Товары"/>
+    </children>
+</AnchorPane>

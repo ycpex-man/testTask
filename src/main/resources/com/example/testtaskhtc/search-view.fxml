@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="169.0" prefWidth="287.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testtaskhtc.SearchViewController">
+    <children>
+        <Button fx:id="searchBtn" layoutX="120.0" layoutY="126.0" mnemonicParsing="false"
+                onAction="#onSearchButtonClick" text="Поиск"/>
+        <Label layoutX="34.0" layoutY="27.0" prefHeight="17.0" prefWidth="87.0" text="Поиск по:"/>
+        <TextField fx:id="textField" layoutX="34.0" layoutY="77.0" prefHeight="25.0" prefWidth="223.0"
+                   promptText="Введите "/>
+        <ComboBox fx:id="searchBox" layoutX="106.0" layoutY="24.0" prefWidth="150.0">
+
+        </ComboBox>
+
+    </children>
+</AnchorPane>

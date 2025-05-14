@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testtaskhtc.AddViewController">
+   <children>
+      <TextField fx:id="idPriceField" layoutX="6.0" layoutY="14.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите Id цены" />
+      <TextField fx:id="codeField" layoutX="6.0" layoutY="54.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите код" />
+      <TextField fx:id="nameField" layoutX="6.0" layoutY="95.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите название товара" />
+      <TextField fx:id="barCodeField" layoutX="6.0" layoutY="135.0" onKeyTyped="#handleKeyTyped" prefHeight="25.0" prefWidth="190.0" promptText="Введите штрих-код" />
+      <TextField fx:id="quantityField" layoutX="6.0" layoutY="175.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите количество" />
+      <TextField fx:id="modelField" layoutX="6.0" layoutY="214.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите модель" />
+      <TextField fx:id="sortField" layoutX="5.0" layoutY="254.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите сорт" />
+      <TextField fx:id="colorField" layoutX="6.0" layoutY="291.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите цвет" />
+      <TextField fx:id="sizeField" layoutX="5.0" layoutY="329.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите размер" />
+      <TextField fx:id="weightField" layoutX="5.0" layoutY="361.0" prefHeight="25.0" prefWidth="190.0" promptText="Введите вес" />
+      <Button fx:id="addBtn" layoutX="19.0" layoutY="423.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="162.0" text="Добавить товар" />
+   </children>
+</AnchorPane>
