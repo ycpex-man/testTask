@@ -16,6 +16,7 @@ public class Main extends Application {
         stage.setTitle("НТС");
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
         DataFromDatabase d = new DataFromDatabase();
         //d.autoLoadDataToProducts();
         //d.deleteAllFromProducts();

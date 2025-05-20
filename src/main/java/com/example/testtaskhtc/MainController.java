@@ -136,11 +136,12 @@ public class MainController {
     @FXML
     private void onAddButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("add-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 200, 466);
+        Scene scene = new Scene(fxmlLoader.load(), 557, 301);
         Stage stage = new Stage();
         stage.setTitle("Добавление товара");
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     @FXML
@@ -170,6 +171,7 @@ public class MainController {
         stage.setTitle("Поиск товара");
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
 
     }
 

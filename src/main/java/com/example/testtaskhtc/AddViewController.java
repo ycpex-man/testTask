@@ -1,9 +1,8 @@
 package com.example.testtaskhtc;
 
-import javax.swing.*;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
@@ -35,15 +34,39 @@ public class AddViewController {
     @FXML
     private TextField weightField;
     @FXML
+    private Label idLabel;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label codeLabel;
+    @FXML
+    private Label barCodeLabel;
+    @FXML
+    private Label quantityLabel;
+    @FXML
+    private Label modelLabel;
+    @FXML
+    private Label sortLabel;
+    @FXML
+    private Label colorLabel;
+    @FXML
+    private Label sizeLabel;
+    @FXML
+    private Label weightLabel;
+    @FXML
     private Button addBtn;
 
     @FXML
-    private void onAddButtonClick() throws IOException {
-        d.loadDataToProducts(idPriceField, codeField, nameField, barCodeField, quantityField,
-                modelField, sortField, colorField, sizeField, weightField);
-        JOptionPane.showMessageDialog(null, "Добавлен");
-        Stage stage = (Stage) addBtn.getScene().getWindow();
-        stage.close();
+    private void onAddButtonClick() {
+        Validation validation = new Validation();
+        int check = d.loadDataToProducts(idPriceField, idLabel, codeField, codeLabel, nameField, nameLabel,
+                barCodeField, barCodeLabel, quantityField, quantityLabel, modelField, modelLabel, sortField,
+                sortLabel, colorField, colorLabel, sizeField, sizeLabel, weightField, weightLabel);
+        if (check > 0) {
+            validation.showAlertInformation("Успех", "Товар добавлен");
+            Stage stage = (Stage) addBtn.getScene().getWindow();
+            stage.close();
+        } else validation.showAlertWarning("Ошибка", "Проверьте введённые данные");
     }
 
     @FXML

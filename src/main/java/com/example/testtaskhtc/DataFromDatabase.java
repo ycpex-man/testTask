@@ -1,5 +1,6 @@
 package com.example.testtaskhtc;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -106,27 +107,102 @@ public class DataFromDatabase {
         }
     }
 
-    protected void loadDataToProducts(TextField idPriceField, TextField codeField, TextField nameField,
-                                      TextField barCodeField, TextField quantityField, TextField modelField,
-                                      TextField sortField, TextField colorField, TextField sizeField, TextField weightField) {
+    protected int loadDataToProducts(TextField idPriceField, Label idPriceLabel, TextField codeField, Label codeLabel,
+                                     TextField nameField, Label nameLabel, TextField barCodeField, Label barCodeLabel,
+                                     TextField quantityField, Label quantityLabel, TextField modelField, Label modelLabel,
+                                     TextField sortField, Label sortLabel, TextField colorField, Label colorLabel,
+                                     TextField sizeField, Label sizeLabel, TextField weightField, Label weightLabel) {
+        Validation validation = new Validation();
         String query = "INSERT INTO Products (IdPrice, Code, Name, BarCode, Quantity, Model, Sort, Color, Size, Weight, DateChanges)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW());";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(idPriceField.getText()));
-            preparedStatement.setInt(2, Integer.parseInt(codeField.getText()));
-            preparedStatement.setString(3, nameField.getText());
-            preparedStatement.setString(4, barCodeField.getText());
-            preparedStatement.setBigDecimal(5, new BigDecimal(quantityField.getText()));
-            preparedStatement.setString(6, modelField.getText());
-            preparedStatement.setString(7, sortField.getText());
-            preparedStatement.setString(8, colorField.getText());
-            preparedStatement.setString(9, sizeField.getText());
-            preparedStatement.setString(10, weightField.getText());
+            if (!validation.isValidNumber(idPriceField.getText())) {
+                idPriceField.setStyle("-fx-border-color: red;");
+                idPriceLabel.setText("Посмотреть Id цены для ввода можно в таблице \"Цены\"");
+            } else {
+                preparedStatement.setInt(1, Integer.parseInt(idPriceField.getText()));
+                idPriceField.setStyle("");
+                idPriceLabel.setText("");
+            }
+            if (!validation.isValidNumber(codeField.getText())) {
+                codeField.setStyle("-fx-border-color: red;");
+                codeLabel.setText("Код товара может содержать только цифры 0-9");
+            } else {
+                preparedStatement.setInt(2, Integer.parseInt(codeField.getText()));
+                codeField.setStyle("");
+                codeLabel.setText("");
+            }
+            if (!validation.isValidString(nameField.getText())) {
+                nameField.setStyle("-fx-border-color: red;");
+                nameLabel.setText("Название товара не может быть пустым");
+            } else {
+                preparedStatement.setString(3, nameField.getText());
+                nameField.setStyle("");
+                nameLabel.setText("");
+            }
+            if (!validation.isValidNumber(barCodeField.getText())) {
+                barCodeField.setStyle("-fx-border-color: red;");
+                barCodeLabel.setText("Штрих-код может содержать только цифры 0-9");
+            } else {
+                preparedStatement.setString(4, barCodeField.getText());
+                barCodeField.setStyle("");
+                barCodeLabel.setText("");
+            }
+            if (!validation.isValidNumber(quantityField.getText())) {
+                quantityField.setStyle("-fx-border-color: red;");
+                quantityLabel.setText("Количество товаров модет содержать только цифры 0-9");
+            } else {
+                preparedStatement.setBigDecimal(5, new BigDecimal(quantityField.getText()));
+                quantityField.setStyle("");
+                quantityLabel.setText("");
+            }
+            if (!validation.isValidString(modelField.getText())) {
+                modelField.setStyle("-fx-border-color: red;");
+                modelLabel.setText("Модель товара не может быть пустым");
+            } else {
+                preparedStatement.setString(6, modelField.getText());
+                modelField.setStyle("");
+                modelLabel.setText("");
+            }
+            if (!validation.isValidString(sortField.getText())) {
+                sortField.setStyle("-fx-border-color: red;");
+                sortLabel.setText("Сорт товара не может быть пустым");
+            } else {
+                preparedStatement.setString(7, sortField.getText());
+                sortField.setStyle("");
+                sortLabel.setText("");
+            }
+            if (!validation.isValidString(colorField.getText())) {
+                colorField.setStyle("-fx-border-color: red;");
+                colorLabel.setText("Цвет товара не может быть пустым");
+            } else {
+                preparedStatement.setString(8, colorField.getText());
+                colorField.setStyle("");
+                colorLabel.setText("");
+            }
+            if (!validation.isValidString(sizeField.getText())) {
+                sizeField.setStyle("-fx-border-color: red;");
+                sizeLabel.setText("Размер товара не может быть пустым");
+            } else {
+                preparedStatement.setString(9, sizeField.getText());
+                sizeField.setStyle("");
+                sizeLabel.setText("");
+            }
+            if (!validation.isValidString(weightField.getText())) {
+                weightField.setStyle("-fx-border-color: red;");
+                weightLabel.setText("Вес товара не модет быть пустым");
+            } else {
+                preparedStatement.setString(10, weightField.getText());
+                weightField.setStyle("");
+                weightLabel.setText("");
+            }
             int rows = preparedStatement.executeUpdate();
+            return rows;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     protected void delete(int id) {
@@ -141,39 +217,29 @@ public class DataFromDatabase {
 
     protected void updateDataProducts(TableView<DataFromDatabase> tableView) {
         DataFromDatabase dataFromDatabase = tableView.getSelectionModel().getSelectedItem();
+        Validation validation = new Validation();
         String query = "UPDATE Products SET idPrice = ?, code = ?, name = ?, barCode = ?, quantity = ?, " +
                 "model = ?, sort = ?, color = ?, size = ?, weight = ?, dateChanges =  NOW() WHERE id = ?;";
-        if (dataFromDatabase.getIdPrice() <= 0 || dataFromDatabase.getCode() < 1000 ||
-                dataFromDatabase.getName() == null || dataFromDatabase.getName().isEmpty() ||
-                (dataFromDatabase.getBarCode().length() != 13) || dataFromDatabase.getQuantity() < 0 ||
-                dataFromDatabase.getModel() == null || dataFromDatabase.getModel().isEmpty() ||
-                dataFromDatabase.getSort() == null || dataFromDatabase.getSort().isEmpty() ||
-                dataFromDatabase.getColor() == null || dataFromDatabase.getColor().isEmpty() ||
-                dataFromDatabase.getSize() == null || dataFromDatabase.getSize().isEmpty() ||
-                dataFromDatabase.getWeight() == null || dataFromDatabase.getWeight().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Проверьте введённые данные!");
-        } else {
-            try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1, dataFromDatabase.getIdPrice());
-                preparedStatement.setInt(2, dataFromDatabase.getCode());
-                preparedStatement.setString(3, dataFromDatabase.getName());
-                preparedStatement.setString(4, dataFromDatabase.getBarCode());
-                preparedStatement.setBigDecimal(5, new BigDecimal(dataFromDatabase.getQuantity()));
-                preparedStatement.setString(6, dataFromDatabase.getModel());
-                preparedStatement.setString(7, dataFromDatabase.getSort());
-                preparedStatement.setString(8, dataFromDatabase.getColor());
-                preparedStatement.setString(9, dataFromDatabase.getSize());
-                preparedStatement.setString(10, dataFromDatabase.getWeight());
-                preparedStatement.setInt(11, dataFromDatabase.getId());
-                int rows = preparedStatement.executeUpdate();
-                if (rows >= 1) {
-                    JOptionPane.showMessageDialog(null, "Сохранено");
-                } else
-                    JOptionPane.showMessageDialog(null, "Ошибка");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, dataFromDatabase.getIdPrice());
+            preparedStatement.setInt(2, dataFromDatabase.getCode());
+            preparedStatement.setString(3, dataFromDatabase.getName());
+            preparedStatement.setString(4, dataFromDatabase.getBarCode());
+            preparedStatement.setBigDecimal(5, new BigDecimal(dataFromDatabase.getQuantity()));
+            preparedStatement.setString(6, dataFromDatabase.getModel());
+            preparedStatement.setString(7, dataFromDatabase.getSort());
+            preparedStatement.setString(8, dataFromDatabase.getColor());
+            preparedStatement.setString(9, dataFromDatabase.getSize());
+            preparedStatement.setString(10, dataFromDatabase.getWeight());
+            preparedStatement.setInt(11, dataFromDatabase.getId());
+            int rows = preparedStatement.executeUpdate();
+            if (rows >= 1) {
+                validation.showAlertInformation(null, "Сохранено");
+            } else
+                validation.showAlertWarning("Ошибка", "Ошибка");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -198,7 +264,6 @@ public class DataFromDatabase {
                 preparedStatement.setString(10, (r.nextInt(100) + 1) + "кг");
                 int rows = preparedStatement.executeUpdate();
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
